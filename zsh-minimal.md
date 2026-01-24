@@ -13,13 +13,22 @@ precmd() {
     local DR_RND=$'\u256D'
     local UR_RND=$'\u2570'
     local TOP BOT
-    local RED="%B%F{red}"
-    local BLU="%F{blue}"
-    local WHT=$'%{\e[38;5;255m%}' 
-    local DG=$'%{\e[38;5;240m%}'
-    local LG=$'%{\e[38;5;250m%}'
+    local RED="%B%F{196}"
+    local BLU="%I%F{20}"
+    local LBLU="%F{32}"
+    local WHT=$'%F{15}'
+    local ORNG="F%{208}"
+    local YB="%F{226}%K{27}"
 
-    TOP="${WHT}${DR_RND}${L_SEP}%D{%H:%M}${VL}${LG}%n${WHT}@${DG}%m${WHT}:${BLU}%1~${WHT}${VL}"
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
+        [[ -n $b ]] && F1="${ORNG}${b}%b%f"
+    elif [[ -n ${VIRTUAL_ENV-} ]]; then 
+        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}%f%k%b"
+    else
+        F1="%D{%H:%M}"
+
+    TOP="${WHT}${DR_RND}${L_SEP}${F1}${VL}${LG}%n${WHT}@${DG}%m${WHT}:${BLU}%1~${WHT}${VL}"
 
     if [[ "$EC" != 0 ]]; then
         TOP+="${RED} ${EC}%b%f"$'\n'
