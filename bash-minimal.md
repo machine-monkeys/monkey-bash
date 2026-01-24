@@ -15,6 +15,10 @@ PURP="\[\033[1;38;5;105m\]"
 DGRAY="\[\033[1;38;5;8m\]"
 RESET="\[\033[0m\]"
 
+# Other Colors
+YB="\[\033[1;33;44m\]"
+ORANGE="\[\033[38;5;208m\]"
+
 # Unicode Code Variables
 HL=$'\u2500'
 VL=$'\u2502'
@@ -37,9 +41,9 @@ prompt() {
     # Top Setup
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
-        [[ -n "$b" ]] && F1="$b"
+        [[ -n "$b" ]] && F1="${ORANGE}${b}${RESET}"
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
-        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}"
+        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}${RESET}"
     else
         F1="\\A"
     fi
