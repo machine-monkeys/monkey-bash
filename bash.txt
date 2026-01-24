@@ -7,7 +7,7 @@ BLUE="\[\033[1;38;5;32m\]"
 WHITE="\[\033[1;38;5;15m\]"
 DGRAY="\[\033[1;38;5;245m\]"
 RESET="\[\033[0m\]"
-YB="\[\033[38;5;226m\]\[\033[48;5;27m\]"
+YB="\[\033[38;5;220m\]\[\033[48;5;27m\]"
 ORANGE="\[\033[38;5;208m\]"
 
 HL=$'\u2500'
@@ -19,6 +19,7 @@ DR_RND=$'\u256D'
 UR_RND=$'\u2570'
 DL_RND=$'\u256E'
 UL_RND=$'\u256F'
+DFLAG=$'\U0394'
 
 prompt() {
     EC=$?
@@ -31,6 +32,9 @@ prompt() {
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
         [[ -n "$b" ]] && F1="${ORANGE}${b}${RESET}"
+        if ! git diff --quiet --ignore-submodules -- || ! git diff --quiet --cached --ignore-submodules --; then
+            F1+="${DFLAG}"
+        fi
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
         F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}${RESET}"
     else
