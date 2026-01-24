@@ -1,0 +1,25 @@
+---
+- name: Add shell prompt
+  hosts: localhost
+  connection: local
+  become: true
+  vars:
+    users:
+      - gino
+    root_rc: "/root/.bashrc"
+  tasks:
+    - name: Add prompt for users
+      blockinfile:
+        marker: '# {mark} custom prompt managed by Ansible #'
+        path: /home/{{ item }}/.bashrc
+        block: "{{ lookup('ansible.builtin.file', 'files/bash.txt') }}"
+      loop: "{{ users }}" 
+
+    - name: Add prompt for root
+      blockinfile:
+        marker: '# {mark} custom prompt managed by Ansible #'
+        path: /root/.bashrc
+        block: "{{ lookup('ansible.builtin.file', 'files/root_bash.txt') }}"
+
+    
+    
