@@ -13,30 +13,32 @@ precmd() {
     local DR_RND=$'\u256D'
     local UR_RND=$'\u2570'
     local TOP BOT
-    local RED="%B%F{196}"
-    local BLU="%I%F{20}"
+    local RED="%F{196}"
+    local BLU="%F{27}"
     local LBLU="%F{32}"
-    local WHT=$'%F{15}'
-    local ORNG="F%{208}"
+    local DG="%F{245}"
+    local WHT="%B%F{15}"
+    local ORNG="%F{208}"
     local YB="%F{226}%K{27}"
 
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
-        [[ -n $b ]] && F1="${ORNG}${b}%b%f"
+        [[ -n $b ]] && F1="${ORNG}${b}%f"
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
-        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}%f%k%b"
+        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}%f%k"
     else
         F1="%D{%H:%M}"
+    fi
 
-    TOP="${WHT}${DR_RND}${L_SEP}${F1}${VL}${LG}%n${WHT}@${DG}%m${WHT}:${BLU}%1~${WHT}${VL}"
+    TOP="${WHT}${DR_RND}${L_SEP}${F1}${VL}${LBLU}%n${WHT}@${DG}%m${WHT}:%1~${VL}"
 
     if [[ "$EC" != 0 ]]; then
-        TOP+="${RED} ${EC}%b%f"$'\n'
+        TOP+="${RED} ${EC}%f%b"$'\n'
     else
         TOP+=$'\n'
     fi
 
-    BOT="${UR_RND}${HL}${HL}${HL}${R_TRI}%f "
+    BOT="${UR_RND}${HL}${HL}${HL}${R_TRI}%f%b "
 
     PROMPT="${TOP}${BOT}"
 }
