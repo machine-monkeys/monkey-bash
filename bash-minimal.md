@@ -8,9 +8,10 @@ printf '\e]12;#D0D0D0\a'
 
 # ANSI Escape Variables
 RED="\[\033[1;38;5;196m\]"
-BLUE="\[\033[1;38;5;27m\]"
+BLUE="\[\033[3;34m\]"
+BBLU="\[\033[1;94m\]"
 WHITE="\[\033[1;38;5;15m\]"
-LGRAY="\[\033[1;38;5;7m\]"
+PURP="\[\033[1;38;5;105m\]"
 DGRAY="\[\033[1;38;5;8m\]"
 RESET="\[\033[0m\]"
 
@@ -29,7 +30,7 @@ prompt() {
     EC=$?
 
     C1="${WHITE}"
-    C2="${LGRAY}"
+    C2="${BBLU}"
     C3="${DGRAY}"
     C4="${BLUE}"
 
@@ -38,11 +39,11 @@ prompt() {
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
         [[ -n "$b" ]] && F1="$b"
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
-        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}${RESET}"
+        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}"
     else
         F1="\\A"
     fi
-    TOP="${DR_RND}${L_SEP}${F1}${VL}${C2}\\u${C1}@${C3}\\h${C1}:${C4}\\W${C1}${VL}\\$"
+    TOP="${DR_RND}${L_SEP}${F1}${RESET}${VL}${C2}\\u${RESET}${C1}@${RESET}${C3}\\h${RESET}${C1}:${RESET}${C4}\\W${RESET}${C1}${VL}\\$"
 
     # Append Non-Zero Exit Code
     if [[ "$EC" != 0 ]]; then

@@ -66,7 +66,7 @@ prompt() {
     # Bot Setup + Git Repository
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
-        [[ -n "$b" ]] && BOT="${UR_RND}${HL}{${ORANGE}${b}${RESET}}}${HL}${HL}${R_TRI}${RESET} "
+        [[ -n "$b" ]] && BOT="${UR_RND}${HL}{${ORANGE}${b}${RESET}}${HL}${HL}${R_TRI}${RESET} "
     else
         BOT="${UR_RND}${HL}${HL}${HL}${R_TRI}${RESET} "
     fi
