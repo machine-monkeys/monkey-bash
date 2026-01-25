@@ -2,8 +2,8 @@ printf '\e[1 q'
 printf '\e]12;#D0D0D0\a'
 
 RED="\[\033[1;38;5;196m\]"
-PURP="\[\033[1;38;5;99m\]"
-DRED="\[\033[1;38;5;160m\]"
+TAN="\[\033[1;38;5;95m\]"
+GREEN="\[\033[1;38;5;23m\]"
 WHITE="\[\033[1;38;5;15m\]"
 DGRAY="\[\033[1;38;5;245m\]"
 RESET="\[\033[0m\]"
@@ -25,8 +25,8 @@ prompt() {
     EC=$?
 
     C1="${WHITE}"
-    C2="${DRED}"
-    C3="${PURP}"
+    C2="${GREEN}"
+    C3="${TAN}"
     C4="${DGRAY}"
 
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
