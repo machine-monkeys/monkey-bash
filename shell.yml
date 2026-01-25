@@ -2,24 +2,23 @@
 - name: Add bash prompt
   hosts: localhost
   connection: local
-  become: true
+  become: false
   vars:
-    users:
-      - gino
-    root_rc: "/root/.bashrc"
+    root_bash: false
   tasks:
     - name: Add prompt for users
       blockinfile:
         marker: '# {mark} custom prompt managed by Ansible #'
-        path: /home/{{ item }}/.bashrc
+        path: /home/{{ user }}/.bashrc
         block: "{{ lookup('ansible.builtin.file', 'files/bash.txt') }}"
-      loop: "{{ users }}" 
+      when: user is defined
 
     - name: Add prompt for root
+      become: true
       blockinfile:
         marker: '# {mark} custom prompt managed by Ansible #'
         path: /root/.bashrc
         block: "{{ lookup('ansible.builtin.file', 'files/root_bash.txt') }}"
-
+      when: root_bash
     
     
