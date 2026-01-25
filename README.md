@@ -1,6 +1,6 @@
-# Monkey Prompts
+# Monkey Prompts 
 
-Shell prompts that I use. Currently just `bash` and `zsh`
+Shell prompts for use. Currently just `bash` and `zsh`
 
 ```sh
 # Install locally

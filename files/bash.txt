@@ -32,7 +32,7 @@ prompt() {
 
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
-        [[ -n "$b" ]] && F1="${ORANGE}${b}$"
+        [[ -n "$b" ]] && F1="${ORANGE}${b}"
         if ! git diff --quiet --ignore-submodules -- || ! git diff --quiet --cached --ignore-submodules --; then
             F1+="${RWHITE}${DFLAG}"
         fi
