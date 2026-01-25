@@ -23,6 +23,7 @@ DGRAY="\[\033[1;38;5;245m\]"
 RESET="\[\033[0m\]"
 YB="\[\033[38;5;220m\]\[\033[48;5;27m\]"
 ORANGE="\[\033[38;5;208m\]"
+RWHITE="\[\033[37m\]"
 
 HL=$'\u2500'
 VL=$'\u2502'
@@ -45,14 +46,14 @@ prompt() {
 
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
-        [[ -n "$b" ]] && F1="${ORANGE}${b}${RESET}"
+        [[ -n "$b" ]] && F1="${ORANGE}${b}"
         if ! git diff --quiet --ignore-submodules -- || ! git diff --quiet --cached --ignore-submodules --; then
-            F1+="${DFLAG}"
+            F1+="${RWHITE}${DFLAG}"
         fi
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
-        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}${RESET}"
+        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}"
     else
-        F1="\\A"
+        F1="${WHITE}\\A${WHITE}"
     fi
 
     TOP="${DR_RND}${L_SEP}${F1}${RESET}${VL}${C2}\\u${RESET}${C1}@${RESET}${C3}\\h${RESET}${C1}:${RESET}${C4}\\W${RESET}${C1}${VL}\\$"
