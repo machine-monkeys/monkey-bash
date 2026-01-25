@@ -31,17 +31,17 @@ prompt() {
 
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
-        [[ -n "$b" ]] && F1="${ORANGE}${b}${RESET}"
+        [[ -n "$b" ]] && F1="${ORANGE}${b}"
         if ! git diff --quiet --ignore-submodules -- || ! git diff --quiet --cached --ignore-submodules --; then
-            F1+="${DFLAG}"
+            F1+="\[\033[38;5;15m\]${DFLAG}"
         fi
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
-        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}${RESET}"
+        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}"
     else
         F1="\\A"
     fi
 
-    TOP="${DR_RND}${L_SEP}${F1}${RESET}${VL}${C2}\\u${RESET}${C1}@${RESET}${C3}\\h${RESET}${C1}:${RESET}${C4}\\W${RESET}${C1}${VL}\\$"
+    TOP="${C1}${DR_RND}${L_SEP}${F1}${RESET}${VL}${C2}\\u${RESET}${C1}@${RESET}${C3}\\h${RESET}${C1}:${RESET}${C4}\\W${RESET}${C1}${VL}\\$"
 
     if [[ "$EC" != 0 ]]; then
         TOP+="${RED} ${EC}${RESET}\\n"
@@ -49,7 +49,7 @@ prompt() {
         TOP+="\\n"
     fi
 
-    BOT="${UR_RND}${HL}${HL}${HL}${R_TRI}${RESET} "
+    BOT="${C1}${UR_RND}${HL}${HL}${HL}${R_TRI}${RESET} "
     PS1="${TOP}${BOT}"
 }
 PROMPT_COMMAND='prompt'
