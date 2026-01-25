@@ -1,5 +1,5 @@
 ---
-- name: Add shell prompt
+- name: Add bash prompt
   hosts: localhost
   connection: local
   become: true
