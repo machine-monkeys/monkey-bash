@@ -37,7 +37,7 @@ prompt() {
             F1+="${RWHITE}${DFLAG}"
         fi
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
-        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}$"
+        F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}"
     else
         F1="${WHITE}\\A${WHITE}"
     fi
