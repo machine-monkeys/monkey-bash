@@ -9,6 +9,7 @@ DGRAY="\[\033[1;38;5;245m\]"
 RESET="\[\033[0m\]"
 YB="\[\033[38;5;220m\]\[\033[48;5;27m\]"
 ORANGE="\[\033[38;5;208m\]"
+RWHITE="\[\033[37m\]"
 
 HL=$'\u2500'
 VL=$'\u2502'
@@ -33,7 +34,7 @@ prompt() {
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
         [[ -n "$b" ]] && F1="${ORANGE}${b}$"
         if ! git diff --quiet --ignore-submodules -- || ! git diff --quiet --cached --ignore-submodules --; then
-            F1+="\[\033[38;5;15m\]${DFLAG}"
+            F1+="${RWHITE}${DFLAG}"
         fi
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
         F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}$"
