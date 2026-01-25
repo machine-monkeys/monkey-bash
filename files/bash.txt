@@ -42,7 +42,7 @@ prompt() {
         F1="${RWHITE}\\A"
     fi
 
-    TOP="${DR_RND}${L_SEP}${F1}${RESET}${VL}${C2}\\u${RESET}${C1}@${RESET}${C3}\\h${RESET}${C1}:${RESET}${C4}\\W${RESET}${C1}${VL}\\$"
+    TOP="${C1}${DR_RND}${L_SEP}${F1}${RESET}${VL}${C2}\\u${RESET}${C1}@${RESET}${C3}\\h${RESET}${C1}:${RESET}${C4}\\W${RESET}${C1}${VL}\\$"
 
     if [[ "$EC" != 0 ]]; then
         TOP+="${RED} ${EC}${RESET}\\n"
@@ -50,7 +50,7 @@ prompt() {
         TOP+="\\n"
     fi
 
-    BOT="${UR_RND}${HL}${HL}${HL}${R_TRI}${RESET} "
+    BOT="${C1}${UR_RND}${HL}${HL}${HL}${R_TRI}${RESET} "
     PS1="${TOP}${BOT}"
 }
 PROMPT_COMMAND='prompt'
