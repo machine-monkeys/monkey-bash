@@ -39,7 +39,7 @@ prompt() {
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
         F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}"
     else
-        F1="${WHITE}\\A${WHITE}"
+        F1="${RWHITE}\\A"
     fi
 
     TOP="${DR_RND}${L_SEP}${F1}${RESET}${VL}${C2}\\u${RESET}${C1}@${RESET}${C3}\\h${RESET}${C1}:${RESET}${C4}\\W${RESET}${C1}${VL}\\$"
