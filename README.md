@@ -3,6 +3,11 @@
 Shell prompts for use. Currently just `bash` and `zsh`
 
 ```sh
+# Pip install ansible in virtual environment
+python -m venv .venv
+source .venv/bin/activate
+pip install ansible
+
 # Install for local user
 ansible-playbook -i "localhost," -c local -e "user=${USER}" shell.yml
 
