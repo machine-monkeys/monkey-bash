@@ -20,7 +20,7 @@ DR_RND=$'\u256D'
 UR_RND=$'\u2570'
 DL_RND=$'\u256E'
 UL_RND=$'\u256F'
-DFLAG=$'\U0394'
+DFLAG=$'\u0394'
 
 prompt() {
     EC=$?
