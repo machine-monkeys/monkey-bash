@@ -3,8 +3,6 @@
   hosts: localhost
   connection: local
   become: false
-  vars:
-    root_bash: false
   tasks:
     - name: Add prompt for users
       blockinfile:
@@ -19,6 +17,6 @@
         marker: '# {mark} custom prompt managed by Ansible #'
         path: /root/.bashrc
         block: "{{ lookup('ansible.builtin.file', 'files/root_bash.txt') }}"
-      when: root_bash
+      when: root_bash | default(false) | bool
     
     
