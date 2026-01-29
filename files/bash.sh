@@ -75,11 +75,11 @@ fi
 
 # Pick color based on epoch time result
 case "$CLR_MOD" in
-    0) UC="$BLUE32" HC="$PURPLE99" ;;
-    1) UC="$GREEN29" HC="$BROWN94" ;;
-    2) UC="$YELLOW100" HC="$GREEN30" ;;
-    3) UC="$BLUE44" HC="$PINK212" ;;
-    4) UC="$BLUE73" HC="$GREEN108" ;;
+    "0") UC="$BLUE32" HC="$PURPLE99" ;;
+    "1") UC="$GREEN29" HC="$BROWN94" ;;
+    "2") UC="$YELLOW100" HC="$GREEN30" ;;
+    "3") UC="$BLUE44" HC="$PINK212" ;;
+    "4") UC="$BLUE73" HC="$GREEN108" ;;
 esac
 
 ACCENT_CLR=$(fg256color "$WHITE15")
