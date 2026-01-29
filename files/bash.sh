@@ -47,27 +47,38 @@ BLACK16=16
 BLUE17=17
 BLUE27=27
 BLUE32=32
+BLUE44=44
+BLUE73=73
+BROWN94=94
+BROWN95=95
 GRAY250=250
+GREEN10=10
+GREEN22=22
 GREEN23=23
+GREEN30=30
+GREEN29=29
 GREEN48=48
+GREEN108=108
 ORANGE208=208
+PINK212=212
 PURPLE99=99
-TAN95=95
 RED196=196
 WHITE15=15
+YELLOW100=100
 YELLOW220=220
 
 # Use UNIX Epoch for random selection
 if [[ $- == *i* ]]; then
-    CLR_MOD=$(( $(date +%s) % 3 ))
+    CLR_MOD=$(( $(date +%s) % 5 ))
 fi
 
 # Pick color based on epoch time result
 case "$CLR_MOD" in
     0) UC="$BLUE32" HC="$PURPLE99" ;;
-    1) UC="$GREEN23" HC="$TAN95" ;;
-    2) UC="$YELLOW220" HC="$BLUE27" ;;
-#    *) UC="$BLACK16" HC="$WHITE15" ;;
+    1) UC="$GREEN29" HC="$BROWN94" ;;
+    2) UC="$YELLOW100" HC="$GREEN30" ;;
+    3) UC="$BLUE44" HC="$PINK212" ;;
+    3) UC="$BLUE73" HC="$GREEN108" ;;
 esac
 
 ACCENT_CLR=$(fg256color "$WHITE15")
