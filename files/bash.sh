@@ -65,7 +65,7 @@ fi
 # Pick color based on epoch time result
 case "$CLR_MOD" in
     0) UC="$BLUE32" && HC="$PURPLE99" ;;
-    1) UC="$GREEN23" && HC="$TAN99" ;;
+    1) UC="$GREEN23" && HC="$TAN95" ;;
     2) UC="$YELLOW220" && HC="$BLUE27" ;;
     *) UC="$BLACK16" && HC="$WHITE15" ;;
 esac
