@@ -16,7 +16,8 @@ WHITE=15
 DGRAY=250
 RESET="\[\033[0m\]"
 YELLOW=220
-BLUE=27
+BLUE27=27
+BLUE32=32
 ORANGE=208
 OG_WHITE=37
 
@@ -34,8 +35,8 @@ DR_RND=$'\u256D'
 UR_RND=$'\u2570'
 DFLAG=$'\u0394'
 
-if [[ $- == *i* ]]; then
-    CMOD=$(( $(date +%s) % 5 ))
+#if [[ $- == *i* ]]; then
+#    CMOD=$(( $(date +%s) % 5 ))
 
 C1=$(fg256color 15)
 C2=$(fg256color 32)
