@@ -70,7 +70,7 @@ YELLOW220=220
 # Use UNIX Epoch for random selection
 if [[ $- == *i* ]]; then
     CLR_MOD=$(( $(date +%s) % 5 ))
-    echo "$CLR_MOD"
+    echo $CLR_MOD
 fi
 
 # Pick color based on epoch time result
