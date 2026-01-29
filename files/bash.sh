@@ -1,32 +1,54 @@
-printf '\e[1 q'
-printf '\e]12;#D0D0D0\a'
+# Cursor Style
+printf '\e[1 q' # Shape
+printf '\e]12;#D0D0D0\a' # Color
 
+# Helper Functions
 fg256color() {
-    printf "\[\033[1;38;5;${1}m\]"
+    if [[ -n "${2-}" ]]; then
+        mode="${2};"
+    else
+        mode=""
+    fi
+    printf "\[\033[${mode}38;5;${1}m\]"
 }
 bg256color() {
-    printf "\[\033[48;5;${1}m\]"
+    if [[ -n "${2-}" ]]; then
+        mode="${2};"
+    else
+        mode=""
+    fi
+    printf "\[\033[${mode}48;5;${1}m\]"
 }
 ansi_esc() {
     printf "\[\033[${1}\]"
 }
 
-RED196=196
-WHITE=15
-GRAY=250
-YELLOW=220
+# Mode Codes
+BOLD=1
+DIM=2
+ITALIC=3
+UNDERLINE=4
+BLINK=5
+REVERSE=7
+HIDDEN=8
+STRIKETHRU=9
+
+# 256 Color Codes
+BLACK=16
+BLUE17=17
 BLUE27=27
 BLUE32=32
-PURPLE=99
-ORANGE=208
-OG_WHITE=37
+GRAY250=250
+GREEN23=23
+GREEN48=48
+ORANGE208=208
+PURPLE99=99
+TAN95=95
+RED196=196
+WHITE15=15
+YELLOW220=220
 
-# Option 1 (Blue 32, Purple 99)
-# Option 2 (Green 23, Tan 95)
-# Option 3 ()
-# Option 4 ()
-# Option 5 ()
-
+# Box Drawing Unicodes
 HL=$'\u2500'
 VL=$'\u2502'
 R_TRI=$'\u25B7'
@@ -35,15 +57,25 @@ DR_RND=$'\u256D'
 UR_RND=$'\u2570'
 DFLAG=$'\u0394'
 
-#if [[ $- == *i* ]]; then
-#    CMOD=$(( $(date +%s) % 5 ))
+# Use UNIX Epoch for random selection
+if [[ $- == *i* ]]; then
+    CLR_MOD=$(( $(date +%s) % 3 ))
+fi
 
-ACCENT_CLR=$(fg256color "$WHITE")
-USER_CLR=$(fg256color "$BLUE32")
-HOST_CLR=$(fg256color "$PURPLE")
-WDIR_CLR=$(fg256color "$GRAY")
-REPO_CLR=$(fg256color "$ORANGE")
-VENV_CLR=$(fg256color "$YELLOW")$(bg256color "$BLUE27")
+# Pick color based on epoch time result
+case "$CLR_MOD" in
+    0) UC="$BLUE32" && HC="$PURPLE99" ;;
+    1) UC="$GREEN23" && HC="$TAN99" ;;
+    2) UC="$YELLOW220" && HC="$BLUE27" ;;
+    *) UC="$BLACK16" && HC="$WHITE15" ;;
+esac
+
+ACCENT_CLR=$(fg256color "$WHITE15")
+USER_CLR=$(fg256color "$UC" "$BOLD")
+HOST_CLR=$(fg256color "$HC" "$BOLD")
+WDIR_CLR=$(fg256color "$GRAY250" "$BOLD")
+REPO_CLR=$(fg256color "$ORANGE208")
+VENV_CLR=$(fg256color "$YELLOW220")$(bg256color "$BLUE27")
 ERR_CLR=$(fg256color "$RED196")
 RESET=$(ansi_esc "0m")
 
