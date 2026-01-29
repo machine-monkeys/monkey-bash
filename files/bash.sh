@@ -78,7 +78,7 @@ case "$CLR_MOD" in
     1) UC="$GREEN29" HC="$BROWN94" ;;
     2) UC="$YELLOW100" HC="$GREEN30" ;;
     3) UC="$BLUE44" HC="$PINK212" ;;
-    3) UC="$BLUE73" HC="$GREEN108" ;;
+    4) UC="$BLUE73" HC="$GREEN108" ;;
 esac
 
 ACCENT_CLR=$(fg256color "$WHITE15")
