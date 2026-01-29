@@ -23,6 +23,15 @@ ansi_esc() {
     printf "\[\033[${1}\]"
 }
 
+# Box Drawing Unicodes
+HL=$'\u2500'
+VL=$'\u2502'
+R_TRI=$'\u25B7'
+L_SEP=$'\u2524'
+DR_RND=$'\u256D'
+UR_RND=$'\u2570'
+DFLAG=$'\u0394'
+
 # Mode Codes
 BOLD=1
 DIM=2
@@ -34,7 +43,7 @@ HIDDEN=8
 STRIKETHRU=9
 
 # 256 Color Codes
-BLACK=16
+BLACK16=16
 BLUE17=17
 BLUE27=27
 BLUE32=32
@@ -48,15 +57,6 @@ RED196=196
 WHITE15=15
 YELLOW220=220
 
-# Box Drawing Unicodes
-HL=$'\u2500'
-VL=$'\u2502'
-R_TRI=$'\u25B7'
-L_SEP=$'\u2524'
-DR_RND=$'\u256D'
-UR_RND=$'\u2570'
-DFLAG=$'\u0394'
-
 # Use UNIX Epoch for random selection
 if [[ $- == *i* ]]; then
     CLR_MOD=$(( $(date +%s) % 3 ))
@@ -64,10 +64,10 @@ fi
 
 # Pick color based on epoch time result
 case "$CLR_MOD" in
-    0) UC="$BLUE32" && HC="$PURPLE99" ;;
-    1) UC="$GREEN23" && HC="$TAN95" ;;
-    2) UC="$YELLOW220" && HC="$BLUE27" ;;
-    *) UC="$BLACK16" && HC="$WHITE15" ;;
+    0) UC="$BLUE32" HC="$PURPLE99" ;;
+    1) UC="$GREEN23" HC="$TAN95" ;;
+    2) UC="$YELLOW220" HC="$BLUE27" ;;
+    *) UC="$BLACK16" HC="$WHITE15" ;;
 esac
 
 ACCENT_CLR=$(fg256color "$WHITE15")
