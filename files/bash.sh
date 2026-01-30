@@ -52,7 +52,12 @@ BLUE45=45
 BLUE73=73
 BROWN94=94
 BROWN95=95
+GRAY234=234
+GRAY235=235
+GRAY245=245
+GRAY246=246
 GRAY250=250
+GRAY252=252
 GREEN10=10
 GREEN22=22
 GREEN23=23
@@ -60,6 +65,7 @@ GREEN30=30
 GREEN29=29
 GREEN48=48
 GREEN108=108
+ORANGE130=130
 ORANGE172=172
 ORANGE208=208
 PINK163=163
@@ -95,7 +101,8 @@ ACCENT_CLR=$(fg256color "$WHITE15")
 USER_CLR=$(fg256color "$UC" "$BOLD")
 HOST_CLR=$(fg256color "$HC" "$BOLD")
 WDIR_CLR=$(fg256color "$GRAY250" "$BOLD")
-REPO_CLR=$(fg256color "$ORANGE208")$(bg256color "$WHITE15")
+REPO_CLR=$(fg256color "$GRAY234" "$BOLD")$(bg256color "$GRAY246")
+DFLAG_CLR=$(fg256color "$GRAY235" "$BOLD")
 VENV_CLR=$(fg256color "$YELLOW220")$(bg256color "$BLUE27")
 ERR_CLR=$(fg256color "$RED196")
 RESET=$(ansi_esc "0m")
@@ -107,7 +114,7 @@ prompt() {
         b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=""
         [[ -n "$b" ]] && F1="${REPO_CLR}${b}"
         if ! git diff --quiet --ignore-submodules -- || ! git diff --quiet --cached --ignore-submodules --; then
-            F1+="${ACCENT_CLR}${DFLAG}"
+            F1+="${DFLAG_CLR}${DFLAG}"
         fi
     elif [[ -n ${VIRTUAL_ENV-} ]]; then 
         F1="${YB}${VIRTUAL_ENV_PROMPT:-(${VIRTUAL_ENV##*/})}"
