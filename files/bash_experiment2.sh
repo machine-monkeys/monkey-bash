@@ -2,6 +2,12 @@
 printf '\e[1 q' # Shape
 printf '\e]12;#D0D0D0\a' # Color
 
+# Notes
+# 1. random select dominant color
+# 2. random select dominant major or minor
+# 3. random select 1 of 3 patterns DML, DMM, DLL
+# 4. random select major or minor for secondary colors
+
 # Helper Functions
 coin_flip() {
     case $((RANDOM % 2)) in
@@ -16,22 +22,65 @@ tri_flip() {
         2) printf '%s' "$3" ;;
     esac
 }
+mag_flip() {
+  case $((RANDOM % 5)) in
+    0) printf '%s' 1 ;;
+    1) printf '%s' 6 ;;
+    2) printf '%s' 36 ;;
+    3) printf '%s' 72 ;;
+    4) printf '%s' 108 ;;
+  esac
+}
 calc216() {
     local R=$1 G=$2 B=$3 calc
     calc=$((16 + 36*R + 6*G + B))
     printf '%s' "$calc"
 }
-g_chan() {
-    GFLIP=$(( RANDOM % 2 + 2 ))
-    printf '%s' "$GFLIP"
+random_color1() {
+    RANDOM=$(( $(date +%s%N) % 32768 ))
+    DOM=$(tri_flip "red" "green" "blue")
+    PATTERN=$(tri_flip "dml" "dmm" "dll")
+    DOM_VAL=$(coin_flip 4 5)
+    
+    if [[ "$PATTERN" == "dml" ]]; then
+        MED_VAL=$(coin_flip 2 3)
+        LOW_VAL=$(coin_flip 0 1)
+        case "$DOM" in
+            red) if [[ $(coin_flip 0 1) == 0 ]]; then calc216 "$DOM_VAL" "$MED_VAL" "$LOW_VAL"; else calc216 "$DOM_VAL" "$LOW_VAL" "$MED_VAL"; fi ;;
+            green) if [[ $(coin_flip 0 1) == 0 ]]; then calc216 "$MED_VAL" "$DOM_VAL" "$LOW_VAL"; else calc216 "$LOW_VAL" "$DOM_VAL" "$MED_VAL"; fi ;; 
+            blue) if [[ $(coin_flip 0 1) == 0 ]]; then calc216 "$MED_VAL" "$LOW_VAL" "$DOM_VAL"; else calc216 "$LOW_VAL" "$MED_VAL" "$DOM_VAL"; fi ;;
+        esac
+
+    elif [[ "$PATTERN" == "dmm" ]]; then
+        MED_VAL1=$(coin_flip 2 3)
+        MED_VAL2=$(coin_flip 2 3)
+        case "$DOM" in
+            red) calc216 "$DOM_VAL" "$MED_VAL1" "$MED_VAL2" ;;
+            green) calc216 "$MED_VAL1" "$DOM_VAL" "$MED_VAL2" ;;
+            blue) calc216 "$MED_VAL1" "$MED_VAL2" "$DOM_VAL" ;;
+        esac
+    else
+        LOW_VAL1=$(coin_flip 0 1)
+        LOW_VAL2=$(coin_flip 0 1)
+        case "$DOM" in
+            red) calc216 "$DOM_VAL" "$LOW_VAL1" "$LOW_VAL2" ;;
+            green) calc216 "$LOW_VAL1" "$DOM_VAL" "$LOW_VAL2" ;;
+            blue) calc216 "$LOW_VAL1" "$LOW_VAL2" "$DOM_VAL" ;;
+        esac
+    fi
 }
-quad_flip() {
-    case $((RANDOM % 4)) in
-        0) printf '%s' "$1" ;;
-        1) printf '%s' "$2" ;;
-        2) printf '%s' "$3" ;;
-        3) printf '%s' "$3" ;;
-    esac
+random_color2() {
+    local COLOR1=$1 mag dir op opcheck COLOR2
+    mag=$(mag_flip)
+    dir=$(coin_flip -1 1)
+    op=$(( mag * dir ))
+    opcheck=$(( COLOR1 + op ))
+    if (( opcheck < 16 || opcheck > 231 )); then
+        COLOR2=$(( COLOR1 - op ))
+    else
+        COLOR2=$opcheck
+    fi
+    printf '%s' "$COLOR2"
 }
 fg216() {
     if [[ -n "${2-}" ]]; then
@@ -72,14 +121,11 @@ REVERSE=7
 HIDDEN=8
 STRIKETHRU=9
 
-chan1=$(quad_flip 1 2 3 4)
-chan2=$(( 5 - chan1 ))
-gchan=$(g_chan)
-
-C1=$(calc216 "$chan1" "$gchan" "$chan2")
-C2=$(calc216 "$chan2" "$gchan" "$chan1")
+C1=$(random_color1)
+C2=$(random_color2 "$C1")
 
 FLIP=$(coin_flip 0 1)
+
 case "$FLIP" in
     0) UC="$C1" HC="$C2" ;;
     1) UC="$C2" HC="$C1" ;;
@@ -113,18 +159,8 @@ prompt() {
     fi
 
     if $RAINBOW_MODE; then
-        chan1=$(quad_flip 1 2 3 4)
-        chan2=$(( 5 - chan1 ))
-        gchan=$(g_chan)
-        
-        C1=$(calc216 "$chan1" "$gchan" "$chan2")
-        C2=$(calc216 "$chan2" "$gchan" "$chan1")
-        
-        FLIP=$(coin_flip 0 1)
-        case "$FLIP" in
-            0) UC="$C1" HC="$C2" ;;
-            1) UC="$C2" HC="$C1" ;;
-        esac
+        C1=$(random_color1)
+        C2=$(random_color2 "$C1")
         USER_CLR=$(fg216 "$C1" "$BOLD")
         HOST_CLR=$(fg216 "$C2" "$BOLD")
     fi
