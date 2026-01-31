@@ -1,12 +1,12 @@
 ---
-- name: Add bash prompt
+- name: Add customized bash prompt
   hosts: localhost
   connection: local
   become: false
   tasks:
-    - name: Add prompt for users
+    - name: Append bash prompt block to user .bashrc
       blockinfile:
-        marker: '# {mark} custom prompt managed by Ansible #'
+        marker: '# {mark} bash prompt managed by Ansible #'
         path: /home/{{ user }}/.bashrc
         block: "{{ lookup('ansible.builtin.file', 'files/bash.sh') }}"
       when: user is defined

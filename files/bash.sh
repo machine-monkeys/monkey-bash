@@ -113,8 +113,8 @@ prompt() {
             0) UC="$C1" HC="$C2" ;;
             1) UC="$C2" HC="$C1" ;;
         esac
-        USER_CLR=$(fg216 "$C1" "$BOLD")
-        HOST_CLR=$(fg216 "$C2" "$BOLD")
+        USER_CLR=$(fg216 "$UC" "$BOLD")
+        HOST_CLR=$(fg216 "$HC" "$BOLD")
     fi
 
     TOP="${ACCENT_CLR}${DR_RND}${L_SEP}${F1}${RESET}${VL}${USER_CLR}\\u${RESET}${ACCENT_CLR}@${RESET}${HOST_CLR}\\h${RESET}${ACCENT_CLR}:${RESET}${WDIR_CLR}\\W${RESET}${ACCENT_CLR}${VL}\\$"
