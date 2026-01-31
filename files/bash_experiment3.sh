@@ -1,20 +1,3 @@
-# Monkey Bash
-
-```bash
-# Pip install ansible in virtual environment
-python -m venv .venv
-source .venv/bin/activate
-pip install ansible
-
-# Install for local user
-ansible-playbook -i "localhost," -e "user=${USER}" append-bashrc.yml
-```
-
----
-
-### Bash
-
-```bash
 # Cursor Style
 printf '\e[1 q' # Shape
 printf '\e]12;#D0D0D0\a' # Color
@@ -146,4 +129,4 @@ prompt() {
     PS1="${TOP}${BOT}"
 }
 PROMPT_COMMAND='prompt'
-```
+
