@@ -4,7 +4,8 @@ printf '\e]12;#D0D0D0\a' # Color
 
 # Helper Functions
 roll_rand() {
-    local ROLL=${!(( RANDOM % $# + 1))}
+    i=$(( RANDOM % $# + 1))
+    ROLL=${!i}
     printf '%s' "$ROLL"
 }
 calc216() {
@@ -100,7 +101,7 @@ prompt() {
     fi
 
     if $RAINBOW_MODE; then
-        chan1=$(roll_rand 1 2 3 4)
+        chan1=$(roll_rand 0 1 2 3 4 5)
         chan2=$(( 5 - chan1 ))
         gchan=$(roll_rand 1 2 3 4)
         
