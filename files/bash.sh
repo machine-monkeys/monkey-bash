@@ -55,10 +55,10 @@ STRIKETHRU=9
 # Color Channels
 chan1=$(roll_rand 1 4)
 chan2=$(( 5 - chan1 ))
-gchan=$(roll_rand 2 3)
+ctrl_chan=$(roll_rand 2 3)
 
-C1=$(calc216 "$chan1" "$gchan" "$chan2")
-C2=$(calc216 "$chan2" "$gchan" "$chan1")
+C1=$(calc216 "$chan1" "$ctrl_chan" "$chan2")
+C2=$(calc216 "$chan2" "$ctrl_chan" "$chan1")
 
 FLIP=$(roll_rand 0 1)
 case "$FLIP" in
@@ -103,10 +103,10 @@ prompt() {
     if $RAINBOW_MODE; then
         chan1=$(roll_rand 0 1 2 3 4 5)
         chan2=$(( 5 - chan1 ))
-        gchan=$(roll_rand 1 2 3 4)
+        ctrl_chan=$(roll_rand 1 2 3 4)
         
-        C1=$(calc216 "$chan1" "$gchan" "$chan2")
-        C2=$(calc216 "$chan2" "$gchan" "$chan1")
+        C1=$(calc216 "$chan1" "$ctrl_chan" "$chan2")
+        C2=$(calc216 "$chan2" "$ctrl_chan" "$chan1")
         
         FLIP=$(roll_rand 0 1)
         case "$FLIP" in
