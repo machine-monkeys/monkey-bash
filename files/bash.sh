@@ -3,35 +3,14 @@ printf '\e[1 q' # Shape
 printf '\e]12;#D0D0D0\a' # Color
 
 # Helper Functions
-coin_flip() {
-    case $((RANDOM % 2)) in
-        0) printf '%s' "$1" ;;
-        1) printf '%s' "$2" ;;
-    esac
-}
-tri_flip() {
-    case $((RANDOM % 3)) in
-        0) printf '%s' "$1" ;;
-        1) printf '%s' "$2" ;;
-        2) printf '%s' "$3" ;;
-    esac
+roll_rand() {
+    local ROLL=${!(( RANDOM % $# + 1))}
+    printf '%s' "$ROLL"
 }
 calc216() {
     local R=$1 G=$2 B=$3 calc
     calc=$((16 + 36*R + 6*G + B))
     printf '%s' "$calc"
-}
-g_chan() {
-    GFLIP=$(( RANDOM % 2 + 2 ))
-    printf '%s' "$GFLIP"
-}
-quad_flip() {
-    case $((RANDOM % 4)) in
-        0) printf '%s' "$1" ;;
-        1) printf '%s' "$2" ;;
-        2) printf '%s' "$3" ;;
-        3) printf '%s' "$3" ;;
-    esac
 }
 fg216() {
     if [[ -n "${2-}" ]]; then
@@ -72,14 +51,15 @@ REVERSE=7
 HIDDEN=8
 STRIKETHRU=9
 
-chan1=$(quad_flip 1 2 3 4)
+# Color Channels
+chan1=$(roll_rand 1 4)
 chan2=$(( 5 - chan1 ))
-gchan=$(g_chan)
+gchan=$(roll_rand 2 3)
 
 C1=$(calc216 "$chan1" "$gchan" "$chan2")
 C2=$(calc216 "$chan2" "$gchan" "$chan1")
 
-FLIP=$(coin_flip 0 1)
+FLIP=$(roll_rand 0 1)
 case "$FLIP" in
     0) UC="$C1" HC="$C2" ;;
     1) UC="$C2" HC="$C1" ;;
@@ -89,13 +69,20 @@ ACCENT_CLR=$(fg216 15)
 USER_CLR=$(fg216 "$UC" "$BOLD")
 HOST_CLR=$(fg216 "$HC" "$BOLD")
 WDIR_CLR=$(fg216 250 "$BOLD")
+VENV_CLR=$(fg216 250 "$BOLD")
 REPO_CLR=$(fg216 250 "$BOLD")
-DFLAG_CLR=$(fg216 196 "$BOLD")
-VENV_CLR=$(fg216 220)$(bg216 27)
+DFLAG_CLR=$(fg216 196)
 ERR_CLR=$(fg216 196)
 RESET=$(ansi_esc "0m")
 
-RAINBOW_MODE=true
+RAINBOW_MODE=false
+rainbow() {
+    case "$RAINBOW_MODE" in
+        false) RAINBOW_MODE=true ;;
+        true) RAINBOW_MODE=false ;;
+        *) RAINBOW_MODE=false
+    esac
+}
 
 prompt() {
     local EC=$? b
@@ -113,14 +100,14 @@ prompt() {
     fi
 
     if $RAINBOW_MODE; then
-        chan1=$(quad_flip 1 2 3 4)
+        chan1=$(roll_rand 1 2 3 4)
         chan2=$(( 5 - chan1 ))
-        gchan=$(g_chan)
+        gchan=$(roll_rand 1 2 3 4)
         
         C1=$(calc216 "$chan1" "$gchan" "$chan2")
         C2=$(calc216 "$chan2" "$gchan" "$chan1")
         
-        FLIP=$(coin_flip 0 1)
+        FLIP=$(roll_rand 0 1)
         case "$FLIP" in
             0) UC="$C1" HC="$C2" ;;
             1) UC="$C2" HC="$C1" ;;
