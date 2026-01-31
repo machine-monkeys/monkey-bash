@@ -77,12 +77,26 @@ ERR_CLR=$(fg216 196)
 RESET=$(ansi_esc "0m")
 
 RAINBOW_MODE=false
+CTRL_CLR="green"
 rainbow() {
-    case "$RAINBOW_MODE" in
-        false) RAINBOW_MODE=true ;;
-        true) RAINBOW_MODE=false ;;
-        *) RAINBOW_MODE=false
-    esac
+    if [[ -n "$1" ]]; then
+        RAINBOW_MODE=true
+        if [[ "$1" == "red" ]]; then
+            CTRL_CLR="red"
+        elif [[ "$1" == "blue" ]]; then
+            CTRL_CLR="blue"
+        elif [[ "$1" == "green" ]]; then
+            CTRL_CLR="green"
+        else
+            CTRL_CLR="mixed"
+        fi
+    else
+        case "$RAINBOW_MODE" in
+            false) RAINBOW_MODE=true ;;
+            true) RAINBOW_MODE=false ;;
+            *) RAINBOW_MODE=false
+        esac
+    fi
 }
 
 prompt() {
@@ -105,8 +119,31 @@ prompt() {
         chan2=$(( 5 - chan1 ))
         ctrl_chan=$(roll_rand 1 2 3 4)
         
-        C1=$(calc216 "$chan1" "$ctrl_chan" "$chan2")
-        C2=$(calc216 "$chan2" "$ctrl_chan" "$chan1")
+        if [[ "$CTRL_CLR" == "red" ]]; then
+            C1=$(calc216 "$ctrl_chan" "$chan1" "$chan2")
+            C2=$(calc216 "$ctrl_chan" "$chan2" "$chan1")
+        elif [[ "$CTRL_CLR" == "blue" ]]; then
+            C1=$(calc216 "$chan1" "$chan2" "$ctrl_chan")
+            C2=$(calc216 "$chan2" "$chan1" "$ctrl_chan")
+        elif [[ "$CTRL_CLR" == "green" ]]; then    
+            C1=$(calc216 "$chan1" "$ctrl_chan" "$chan2")
+            C2=$(calc216 "$chan2" "$ctrl_chan" "$chan1")
+        else
+            case "$((RANDOM % 3))" in
+                0) 
+                  C1=$(calc216 "$ctrl_chan" "$chan1" "$chan2")
+                  C2=$(calc216 "$ctrl_chan" "$chan2" "$chan1")
+                  ;;
+                1)
+                  C1=$(calc216 "$chan1" "$chan2" "$ctrl_chan")
+                  C2=$(calc216 "$chan2" "$chan1" "$ctrl_chan")
+                  ;;
+                2)
+                  C1=$(calc216 "$chan1" "$ctrl_chan" "$chan2")
+                  C2=$(calc216 "$chan2" "$ctrl_chan" "$chan1")
+                  ;;
+            esac
+        fi
         
         FLIP=$(roll_rand 0 1)
         case "$FLIP" in
