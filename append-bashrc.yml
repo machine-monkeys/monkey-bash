@@ -7,7 +7,7 @@
     - name: Append bash prompt block to user .bashrc
       blockinfile:
         marker: '# {mark} bash prompt managed by Ansible #'
-        path: /home/{{ user }}/.bashrc
+        path: /Users/ginocurtis/.bashrc
         block: "{{ lookup('ansible.builtin.file', 'files/bash.sh') }}"
       when: user is defined
 
