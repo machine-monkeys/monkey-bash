@@ -1,3 +1,6 @@
+# Safegaurd for non-interactive shells
+[[ $- != *i* ]] && return
+
 # Cursor Style
 printf '\e[1 q' # Shape
 printf '\e]12;#D0D0D0\a' # Color
